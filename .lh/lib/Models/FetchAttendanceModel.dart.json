@@ -1,0 +1,26 @@
+{
+    "sourceFile": "lib/Models/FetchAttendanceModel.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1741805243216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741805615654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,22 @@\n import 'package:cloud_firestore/cloud_firestore.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n import 'package:shared_preferences/shared_preferences.dart';\r\n \r\n-final attendanceLogProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {\r\n+final attendanceLogProvider =\r\n+    FutureProvider<List<Map<String, dynamic>>>((ref) async {\r\n   SharedPreferences prefs = await SharedPreferences.getInstance();\r\n   String userEmail = prefs.getString('user_email') ?? \"unknown@example.com\";\r\n \r\n   FirebaseFirestore firestore = FirebaseFirestore.instance;\r\n \r\n   // Fetch all attendance records for the user\r\n   QuerySnapshot snapshot = await firestore\r\n       .collection(\"attendance\")\r\n-      .where(\"email\", isEqualTo: userEmail)\r\n+      .where(\"userEmail\", isEqualTo: userEmail)\r\n       .orderBy(\"date\", descending: true)\r\n       .get();\r\n \r\n-  return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();\r\n+  return snapshot.docs\r\n+      .map((doc) => doc.data() as Map<String, dynamic>)\r\n+      .toList();\r\n });\r\n"
+                },
+                {
+                    "date": 1741805955804,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,8 @@\n   String userEmail = prefs.getString('user_email') ?? \"unknown@example.com\";\r\n \r\n   FirebaseFirestore firestore = FirebaseFirestore.instance;\r\n \r\n-  // Fetch all attendance records for the user\r\n   QuerySnapshot snapshot = await firestore\r\n       .collection(\"attendance\")\r\n       .where(\"userEmail\", isEqualTo: userEmail)\r\n       .orderBy(\"date\", descending: true)\r\n"
+                }
+            ],
+            "date": 1741805243216,
+            "name": "Commit-0",
+            "content": "import 'package:cloud_firestore/cloud_firestore.dart';\r\nimport 'package:flutter_riverpod/flutter_riverpod.dart';\r\nimport 'package:shared_preferences/shared_preferences.dart';\r\n\r\nfinal attendanceLogProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {\r\n  SharedPreferences prefs = await SharedPreferences.getInstance();\r\n  String userEmail = prefs.getString('user_email') ?? \"unknown@example.com\";\r\n\r\n  FirebaseFirestore firestore = FirebaseFirestore.instance;\r\n\r\n  // Fetch all attendance records for the user\r\n  QuerySnapshot snapshot = await firestore\r\n      .collection(\"attendance\")\r\n      .where(\"email\", isEqualTo: userEmail)\r\n      .orderBy(\"date\", descending: true)\r\n      .get();\r\n\r\n  return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();\r\n});\r\n"
+        }
+    ]
+}

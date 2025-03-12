@@ -1,0 +1,46 @@
+{
+    "sourceFile": "lib/Screens/BottomNavbar.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1741805423869,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741805429099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n+import 'Attendance.dart';\r\n import 'AttendanceScreen.dart';\r\n import 'AttendanceLogScreen.dart';\r\n import 'LeaveScreen.dart';\r\n \r\n"
+                },
+                {
+                    "date": 1741805434526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n import 'Attendance.dart';\r\n-import 'AttendanceScreen.dart';\r\n-import 'AttendanceLogScreen.dart';\r\n+import 'Attendancepage.dart';\r\n import 'LeaveScreen.dart';\r\n \r\n final bottomNavIndexProvider = StateProvider<int>((ref) => 0);\r\n \r\n"
+                },
+                {
+                    "date": 1741806119478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n import 'Attendance.dart';\r\n import 'Attendancepage.dart';\r\n-import 'LeaveScreen.dart';\r\n+import 'leavehistory.dart';\r\n \r\n final bottomNavIndexProvider = StateProvider<int>((ref) => 0);\r\n \r\n class BottomNavBarScreen extends ConsumerWidget {\r\n"
+                },
+                {
+                    "date": 1741806136718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n \r\n     final List<Widget> pages = [\r\n       const AttendanceScreen(),\r\n       const AttendanceLogScreen(),\r\n-      const LeaveScreen(),\r\n+      const LeaveApplicationScreen(),\r\n     ];\r\n \r\n     return Scaffold(\r\n       body: pages[currentIndex],\r\n"
+                },
+                {
+                    "date": 1741807077132,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n+import 'package:attendance/Screens/LeaveApplicationScreen.dart';\r\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n import 'Attendance.dart';\r\n import 'Attendancepage.dart';\r\n-import 'leavehistory.dart';\r\n \r\n final bottomNavIndexProvider = StateProvider<int>((ref) => 0);\r\n \r\n class BottomNavBarScreen extends ConsumerWidget {\r\n@@ -21,10 +21,12 @@\n \r\n     return Scaffold(\r\n       body: pages[currentIndex],\r\n       bottomNavigationBar: BottomNavigationBar(\r\n+        backgroundColor: Colors.white,\r\n         currentIndex: currentIndex,\r\n-        onTap: (index) => ref.read(bottomNavIndexProvider.notifier).state = index,\r\n+        onTap: (index) =>\r\n+            ref.read(bottomNavIndexProvider.notifier).state = index,\r\n         selectedItemColor: Colors.blue,\r\n         unselectedItemColor: Colors.grey,\r\n         items: const [\r\n           BottomNavigationBarItem(\r\n"
+                },
+                {
+                    "date": 1741807166817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n \r\n     final List<Widget> pages = [\r\n       const AttendanceScreen(),\r\n       const AttendanceLogScreen(),\r\n-      const LeaveApplicationScreen(),\r\n+      const LeaveTabScreen(),\r\n     ];\r\n \r\n     return Scaffold(\r\n       body: pages[currentIndex],\r\n"
+                },
+                {
+                    "date": 1741807173394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n-import 'package:attendance/Screens/LeaveApplicationScreen.dart';\r\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n import 'Attendance.dart';\r\n import 'Attendancepage.dart';\r\n+import 'LeaveTab.dart';\r\n \r\n final bottomNavIndexProvider = StateProvider<int>((ref) => 0);\r\n \r\n class BottomNavBarScreen extends ConsumerWidget {\r\n"
+                }
+            ],
+            "date": 1741805423869,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\nimport 'package:flutter_riverpod/flutter_riverpod.dart';\r\nimport 'AttendanceScreen.dart';\r\nimport 'AttendanceLogScreen.dart';\r\nimport 'LeaveScreen.dart';\r\n\r\nfinal bottomNavIndexProvider = StateProvider<int>((ref) => 0);\r\n\r\nclass BottomNavBarScreen extends ConsumerWidget {\r\n  const BottomNavBarScreen({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context, WidgetRef ref) {\r\n    final currentIndex = ref.watch(bottomNavIndexProvider);\r\n\r\n    final List<Widget> pages = [\r\n      const AttendanceScreen(),\r\n      const AttendanceLogScreen(),\r\n      const LeaveScreen(),\r\n    ];\r\n\r\n    return Scaffold(\r\n      body: pages[currentIndex],\r\n      bottomNavigationBar: BottomNavigationBar(\r\n        currentIndex: currentIndex,\r\n        onTap: (index) => ref.read(bottomNavIndexProvider.notifier).state = index,\r\n        selectedItemColor: Colors.blue,\r\n        unselectedItemColor: Colors.grey,\r\n        items: const [\r\n          BottomNavigationBarItem(\r\n            icon: Icon(Icons.home),\r\n            label: \"Attendance\",\r\n          ),\r\n          BottomNavigationBarItem(\r\n            icon: Icon(Icons.history),\r\n            label: \"Logs\",\r\n          ),\r\n          BottomNavigationBarItem(\r\n            icon: Icon(Icons.event),\r\n            label: \"Leave\",\r\n          ),\r\n        ],\r\n      ),\r\n    );\r\n  }\r\n}\r\n"
+        }
+    ]
+}

@@ -1,0 +1,66 @@
+{
+    "sourceFile": "lib/Screens/Login.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 12,
+            "patches": [
+                {
+                    "date": 1741784393390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741784702190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n final loginViewModelProvider = Provider((ref) => LoginViewModel(ref.read(authProvider)));\r\n \r\n-// Login Screen\r\n class LoginScreen extends ConsumerWidget {\r\n   final TextEditingController emailController = TextEditingController();\r\n   final TextEditingController passwordController = TextEditingController();\r\n \r\n"
+                },
+                {
+                    "date": 1741784769829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n+import 'package:flutter/material.dart';\r\n+\r\n final loginViewModelProvider = Provider((ref) => LoginViewModel(ref.read(authProvider)));\r\n \r\n class LoginScreen extends ConsumerWidget {\r\n   final TextEditingController emailController = TextEditingController();\r\n"
+                },
+                {
+                    "date": 1741784793979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,9 @@\n import 'package:flutter/material.dart';\r\n+import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n \r\n+import '../Models/LoginModel.dart';\r\n+\r\n final loginViewModelProvider = Provider((ref) => LoginViewModel(ref.read(authProvider)));\r\n \r\n class LoginScreen extends ConsumerWidget {\r\n   final TextEditingController emailController = TextEditingController();\r\n"
+                },
+                {
+                    "date": 1741784949591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,10 @@\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n \r\n import '../Models/LoginModel.dart';\r\n+import '../Providers/Providers.dart';\r\n+import 'Attendance.dart';\r\n \r\n final loginViewModelProvider = Provider((ref) => LoginViewModel(ref.read(authProvider)));\r\n \r\n class LoginScreen extends ConsumerWidget {\r\n"
+                },
+                {
+                    "date": 1741785061166,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n-\r\n import '../Models/LoginModel.dart';\r\n import '../Providers/Providers.dart';\r\n import 'Attendance.dart';\r\n \r\n"
+                },
+                {
+                    "date": 1741795046666,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,8 @@\n import '../Models/LoginModel.dart';\r\n import '../Providers/Providers.dart';\r\n import 'Attendance.dart';\r\n \r\n-final loginViewModelProvider = Provider((ref) => LoginViewModel(ref.read(authProvider)));\r\n \r\n class LoginScreen extends ConsumerWidget {\r\n   final TextEditingController emailController = TextEditingController();\r\n   final TextEditingController passwordController = TextEditingController();\r\n"
+                },
+                {
+                    "date": 1741795103212,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,40 +1,60 @@\n-import 'package:flutter/material.dart';\r\n-import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n-import '../Models/LoginModel.dart';\r\n-import '../Providers/Providers.dart';\r\n-import 'Attendance.dart';\r\n+class LoginScreen extends ConsumerWidget {\r\n+  LoginScreen({Key? key}) : super(key: key);\r\n \r\n-\r\n-class LoginScreen extends ConsumerWidget {\r\n   final TextEditingController emailController = TextEditingController();\r\n   final TextEditingController passwordController = TextEditingController();\r\n \r\n   @override\r\n   Widget build(BuildContext context, WidgetRef ref) {\r\n-    final loginViewModel = ref.read(loginViewModelProvider);\r\n-    \r\n+    final firestore = ref.read(firestoreProvider);\r\n+    final loginViewModel = LoginViewModel(firestore, ref);\r\n+    final user = ref.watch(userProvider);\r\n+\r\n     return Scaffold(\r\n-      appBar: AppBar(title: Text(\"Login\")),\r\n+      appBar: AppBar(title: Text(user != null ? \"Welcome, $user\" : \"Login\")),\r\n       body: Padding(\r\n         padding: const EdgeInsets.all(16.0),\r\n         child: Column(\r\n           children: [\r\n-            TextField(controller: emailController, decoration: InputDecoration(labelText: \"Email\")),\r\n-            TextField(controller: passwordController, obscureText: true, decoration: InputDecoration(labelText: \"Password\")),\r\n+            TextField(\r\n+              controller: emailController,\r\n+              decoration: InputDecoration(labelText: \"Email\"),\r\n+            ),\r\n+            TextField(\r\n+              controller: passwordController,\r\n+              decoration: InputDecoration(labelText: \"Password\"),\r\n+              obscureText: true,\r\n+            ),\r\n             SizedBox(height: 20),\r\n\\ No newline at end of file\n             ElevatedButton(\r\n               onPressed: () async {\r\n-                await loginViewModel.login(emailController.text, passwordController.text, ref);\r\n-                Navigator.pushReplacement(\r\n-                  context,\r\n-                  MaterialPageRoute(builder: (context) => AttendanceScreen()),\r\n+                await loginViewModel.login(\r\n+                  emailController.text.trim(),\r\n+                  passwordController.text.trim(),\r\n                 );\r\n               },\r\n               child: Text(\"Login\"),\r\n-            )\r\n+            ),\r\n+            ElevatedButton(\r\n+              onPressed: () async {\r\n+                await loginViewModel.registerUser(\r\n+                  emailController.text.trim(),\r\n+                  passwordController.text.trim(),\r\n+                );\r\n+              },\r\n+              child: Text(\"Register\"),\r\n+            ),\r\n+            if (user != null)\r\n+              ElevatedButton(\r\n+                onPressed: () async {\r\n+                  await loginViewModel.logout();\r\n+                },\r\n+                child: Text(\"Logout\"),\r\n+              ),\r\n           ],\r\n         ),\r\n       ),\r\n     );\r\n   }\r\n-}\n+}\r\n+\r\n"
+                },
+                {
+                    "date": 1741795114094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,8 @@\n+import 'package:flutter/material.dart';\r\n+\r\n+import '../Models/LoginModel.dart';\r\n+\r\n class LoginScreen extends ConsumerWidget {\r\n   LoginScreen({Key? key}) : super(key: key);\r\n \r\n   final TextEditingController emailController = TextEditingController();\r\n@@ -56,4 +60,5 @@\n       ),\r\n     );\r\n   }\r\n }\r\n+\r\n"
+                },
+                {
+                    "date": 1741795128242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n import 'package:flutter/material.dart';\r\n+import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n \r\n import '../Models/LoginModel.dart';\r\n \r\n class LoginScreen extends ConsumerWidget {\r\n"
+                },
+                {
+                    "date": 1741795564509,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,6 @@\n import 'package:flutter/material.dart';\r\n import 'package:flutter_riverpod/flutter_riverpod.dart';\r\n-\r\n import '../Models/LoginModel.dart';\r\n \r\n class LoginScreen extends ConsumerWidget {\r\n   LoginScreen({Key? key}) : super(key: key);\r\n@@ -29,20 +28,11 @@\n               controller: passwordController,\r\n               decoration: InputDecoration(labelText: \"Password\"),\r\n               obscureText: true,\r\n             ),\r\n-            SizedBox(height: 20),\r\n+           \r\n             ElevatedButton(\r\n               onPressed: () async {\r\n-                await loginViewModel.login(\r\n-                  emailController.text.trim(),\r\n-                  passwordController.text.trim(),\r\n-                );\r\n-              },\r\n-              child: Text(\"Login\"),\r\n-            ),\r\n-            ElevatedButton(\r\n-              onPressed: () async {\r\n                 await loginViewModel.registerUser(\r\n                   emailController.text.trim(),\r\n                   passwordController.text.trim(),\r\n                 );\r\n"
+                },
+                {
+                    "date": 1741795624034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n               ElevatedButton(\r\n                 onPressed: () async {\r\n                   await loginViewModel.logout();\r\n                 },\r\n-                child: Text(\"Logout\",),\r\n+                child: Text(\"Logout\",S),\r\n               ),\r\n           ],\r\n         ),\r\n       ),\r\n"
+                },
+                {
+                    "date": 1741795796376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,16 @@\n                 Navigator.of(context).pushReplacement(\r\n                   MaterialPageRoute(builder: (context) => AttendanceScreen()),\r\n                 );\r\n               },\r\n-              child: Text(\"Register\",),\r\n+              child: Text(\"Register\",style: ElevatedButton.styleFrom(\r\n+          backgroundColor: color,\r\n+          shape: RoundedRectangleBorder(\r\n+            borderRadius: BorderRadius.circular(8), // Rectangular shape\r\n+          ),\r\n+          elevation: 5, // Adds a slight shadow effect\r\n+          padding: EdgeInsets.symmetric(vertical: 12),\r\n+        ),),\r\n             ),\r\n             if (user != null)\r\n               ElevatedButton(\r\n                 onPressed: () async {\r\n"
+                }
+            ],
+            "date": 1741784393390,
+            "name": "Commit-0",
+            "content": "final loginViewModelProvider = Provider((ref) => LoginViewModel(ref.read(authProvider)));\r\n\r\n// Login Screen\r\nclass LoginScreen extends ConsumerWidget {\r\n  final TextEditingController emailController = TextEditingController();\r\n  final TextEditingController passwordController = TextEditingController();\r\n\r\n  @override\r\n  Widget build(BuildContext context, WidgetRef ref) {\r\n    final loginViewModel = ref.read(loginViewModelProvider);\r\n    \r\n    return Scaffold(\r\n      appBar: AppBar(title: Text(\"Login\")),\r\n      body: Padding(\r\n        padding: const EdgeInsets.all(16.0),\r\n        child: Column(\r\n          children: [\r\n            TextField(controller: emailController, decoration: InputDecoration(labelText: \"Email\")),\r\n            TextField(controller: passwordController, obscureText: true, decoration: InputDecoration(labelText: \"Password\")),\r\n            SizedBox(height: 20),\r\n            ElevatedButton(\r\n              onPressed: () async {\r\n                await loginViewModel.login(emailController.text, passwordController.text, ref);\r\n                Navigator.pushReplacement(\r\n                  context,\r\n                  MaterialPageRoute(builder: (context) => AttendanceScreen()),\r\n                );\r\n              },\r\n              child: Text(\"Login\"),\r\n            )\r\n          ],\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}"
+        }
+    ]
+}

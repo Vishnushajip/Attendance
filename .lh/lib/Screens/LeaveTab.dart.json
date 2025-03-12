@@ -1,0 +1,38 @@
+{
+    "sourceFile": "lib/Screens/LeaveTab.dart",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1741807143943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1741807149993,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,9 @@\n import 'package:flutter/material.dart';\r\n import 'package:google_fonts/google_fonts.dart';\r\n import 'LeaveApplicationScreen.dart';\r\n import 'LeaveHistoryScreen.dart';\r\n+import 'leavehistory.dart';\r\n \r\n class LeaveTabScreen extends StatelessWidget {\r\n   const LeaveTabScreen({super.key});\r\n \r\n@@ -27,9 +28,9 @@\n           ),\r\n         ),\r\n         body: const TabBarView(\r\n           children: [\r\n-            LeaveApplicationScreen(), // First Tab: Apply for Leave\r\n+            LeaveApplicationScreen(),\r\n             LeaveHistoryScreen(),     // Second Tab: Leave History\r\n           ],\r\n         ),\r\n       ),\r\n"
+                },
+                {
+                    "date": 1741807156672,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n import 'package:flutter/material.dart';\r\n import 'package:google_fonts/google_fonts.dart';\r\n import 'LeaveApplicationScreen.dart';\r\n-import 'LeaveHistoryScreen.dart';\r\n import 'leavehistory.dart';\r\n \r\n class LeaveTabScreen extends StatelessWidget {\r\n   const LeaveTabScreen({super.key});\r\n@@ -29,9 +28,9 @@\n         ),\r\n         body: const TabBarView(\r\n           children: [\r\n             LeaveApplicationScreen(),\r\n-            LeaveHistoryScreen(),     // Second Tab: Leave History\r\n+            LeaveHistoryScreen(),\r\n           ],\r\n         ),\r\n       ),\r\n     );\r\n"
+                },
+                {
+                    "date": 1741807187873,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \r\n   @override\r\n   Widget build(BuildContext context) {\r\n     return DefaultTabController(\r\n-      length: 2, // Number of tabs\r\n+      length: 2,\r\n       child: Scaffold(\r\n         appBar: AppBar(\r\n           title: Text(\r\n             \"Leave Management\",\r\n"
+                },
+                {
+                    "date": 1741807378139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,11 +11,13 @@\n     return DefaultTabController(\r\n       length: 2,\r\n       child: Scaffold(\r\n         appBar: AppBar(\r\n+          centerTitle: true,\r\n           title: Text(\r\n             \"Leave Management\",\r\n-            style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),\r\n+            style:\r\n+                GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),\r\n           ),\r\n           bottom: const TabBar(\r\n             indicatorColor: Colors.blue,\r\n             labelColor: Colors.blue,\r\n"
+                },
+                {
+                    "date": 1741807467179,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n   Widget build(BuildContext context) {\r\n     return DefaultTabController(\r\n       length: 2,\r\n       child: Scaffold(\r\n+        backgroundColor: Colors.white,\r\n         appBar: AppBar(\r\n           centerTitle: true,\r\n           title: Text(\r\n             \"Leave Management\",\r\n"
+                }
+            ],
+            "date": 1741807143943,
+            "name": "Commit-0",
+            "content": "import 'package:flutter/material.dart';\r\nimport 'package:google_fonts/google_fonts.dart';\r\nimport 'LeaveApplicationScreen.dart';\r\nimport 'LeaveHistoryScreen.dart';\r\n\r\nclass LeaveTabScreen extends StatelessWidget {\r\n  const LeaveTabScreen({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return DefaultTabController(\r\n      length: 2, // Number of tabs\r\n      child: Scaffold(\r\n        appBar: AppBar(\r\n          title: Text(\r\n            \"Leave Management\",\r\n            style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),\r\n          ),\r\n          bottom: const TabBar(\r\n            indicatorColor: Colors.blue,\r\n            labelColor: Colors.blue,\r\n            unselectedLabelColor: Colors.grey,\r\n            tabs: [\r\n              Tab(icon: Icon(Icons.event_available), text: \"Apply Leave\"),\r\n              Tab(icon: Icon(Icons.history), text: \"Leave History\"),\r\n            ],\r\n          ),\r\n        ),\r\n        body: const TabBarView(\r\n          children: [\r\n            LeaveApplicationScreen(), // First Tab: Apply for Leave\r\n            LeaveHistoryScreen(),     // Second Tab: Leave History\r\n          ],\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}\r\n"
+        }
+    ]
+}
