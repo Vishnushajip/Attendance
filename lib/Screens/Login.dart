@@ -1,8 +1,8 @@
+import 'package:attendance/Screens/BottomNavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Models/LoginModel.dart';
-import 'Attendance.dart';
 
 final loadingProvider = StateProvider<bool>((ref) => false);
 
@@ -86,7 +86,7 @@ class LoginScreen extends ConsumerWidget {
                           if (success) {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => AttendanceScreen()),
+                                  builder: (context) => BottomNavBarScreen()),
                             );
                           }
                         },
